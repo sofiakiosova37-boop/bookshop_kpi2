@@ -9,13 +9,13 @@ Rental: id, rental_date, return_date, client_id, copy_id
 ClubMeeting: id, meeting_date, book_id, game_id, staff_id, client_id
 
 erDiagram
-
-CLIENT ||--o{ ORDER
-CLIENT ||--o{ RENTAL
-ORDER ||--o{ BOOK
-ORDER ||--o{ GAME
-Staff ClubMeeting
-Client ClubMeeting
-STAFF ||--o{ ORDER
-STAFF||--o{ RENTAL
-
+CLIENT ||--o{ ORDER : ""
+CLIENT ||--o{ RENTAL : ""
+ORDER ||--|{ ORDER_ITEM : ""
+BOOK ||--o{ ORDER_ITEM : ""
+GAME ||--o{ ORDER_ITEM : ""
+STAFF ||--o{ ORDER : ""
+STAFF||--o{ RENTAL : ""
+Staff ||--o{ ClubMeeting : ""
+BOOK ||--o{ CLUB_MEETING : ""
+GAME ||--o{ CLUB_MEETING : ""
