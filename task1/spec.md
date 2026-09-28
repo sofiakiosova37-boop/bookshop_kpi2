@@ -31,21 +31,12 @@ CLIENT {
     int id PK
     string name
     string surname
-    int phone
+    string phone
     string phone 
     int bonuses
 }
 
 BOOK {
-    int id PK
-    string name 
-    int age_restriction
-    int number_of_players
-    int price
-    int number_in_stock
-}
-
-BOARD_GAME {
     int id PK
     string author
     int year
@@ -54,9 +45,18 @@ BOARD_GAME {
     int number_in_stock
 }
 
+BOARD_GAME {
+    int id PK
+    string name 
+    int age_restriction
+    int number_of_players
+    int price
+    int number_in_stock
+}
+
 GAME_COPY {
     int id PK
-    int game_id FK
+    int board_game_id FK
     int uniq_number 
     string status
 
@@ -71,7 +71,7 @@ ORDER {
     string status
 }
 
-RENT {
+RENTAL {
     int id PK
     int client_id FK 
     inr copy_id FK
@@ -81,9 +81,9 @@ RENT {
 
 CLUB_MEETING {
     int id PK
-    book_id FK
-    game_id FK
-    staff_id FK
+    int book_id FK
+    int game_id FK
+    int staff_id FK
     int client_id FK
     date meeting_date
 }
