@@ -1,17 +1,12 @@
 erDiagram
 CLIENT ||--o{ ORDER : ""
 CLIENT ||--o{ RENTAL : ""
-CLIENT ||--o{ CLUB_MEETING : ""
 STAFF ||--o{ ORDER : ""
 STAFF||--o{ RENTAL : ""
 STAFF ||--o{ CLUB_MEETING : ""
-BOARD_GAME ||--|{ GAME_COPY : ""
-GAME_COPY ||--o{ RENTAL : ""
 ORDER ||--|{ ORDER_ITEM : ""
 BOOK ||--o{ ORDER_ITEM : ""
-BOARD_GAME ||--o{ ORDER_ITEM : ""
 BOOK ||--o{ CLUB_MEETING : ""
-BOARD_GAME ||--o{ CLUB_MEETING : ""
 
 STAFF {
     int id PK
@@ -34,25 +29,8 @@ BOOK {
     string author
     int year
     string genre
-    int price
+    decimal price
     int number_in_stock
-}
-
-BOARD_GAME {
-    int id PK
-    string name 
-    int age_restriction
-    int number_of_players
-    int price
-    int number_in_stock
-}
-
-GAME_COPY {
-    int id PK
-    int board_game_id FK
-    int uniq_number 
-    string status
-
 }
 
 ORDER {
@@ -60,14 +38,15 @@ ORDER {
     int client_id FK
     int staff_id FK
     date order_date 
-    int price
+    decimal price
     string status
 }
 
 RENTAL {
     int id PK
     int client_id FK 
-    int copy_id FK
+    int staff_id FK 
+    int book_id FK
     date rental_date
     date return_date
 }
@@ -75,9 +54,7 @@ RENTAL {
 CLUB_MEETING {
     int id PK
     int book_id FK
-    int game_id FK
     int staff_id FK
-    int client_id FK
     date meeting_date
 }
 
