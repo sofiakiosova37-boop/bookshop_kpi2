@@ -45,7 +45,7 @@ BOOK {
     string author
     int year
     string genre
-    int price
+    decimal price
     int number_in_stock
 }
 
@@ -54,8 +54,7 @@ BOARD_GAME {
     string name 
     int age_restriction
     int number_of_players
-    int price
-    int number_in_stock
+    decimal price
 }
 
 GAME_COPY {
@@ -71,13 +70,14 @@ ORDER {
     int client_id FK
     int staff_id FK
     date order_date 
-    int price
+    decimal price
     string status
 }
 
 RENTAL {
     int id PK
     int client_id FK 
+    int staff_id FK 
     int copy_id FK
     date rental_date
     date return_date
