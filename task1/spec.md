@@ -9,13 +9,37 @@ Order_Item: id, order_id, book_id, quantity, unit_price
 
 erDiagram
 CLIENT ||--o{ ORDER : ""
+### Один замовник може мати або 0 або безліч замовлень, але кожне замовлення прив'язане до конкретного покупця
 CLIENT ||--o{ RENTAL : ""
+### Один кліент може мати або 0 або безліч оренд, але кожна оренда прив'язана до конкретного покупця
 STAFF ||--o{ ORDER : ""
+### Один співробітник може оформити від 0 до безлічі замовлень, але кожне замовлення прив'язується до кокнкретного співробітника, який його оформив 
 STAFF||--o{ RENTAL : ""
+### Один співробітник може оформити від 0 до безлічі оренд, але кожна оренда прив'язується до кокнкретного співробітника, який її оформив 
 STAFF ||--o{ CLUB_MEETING : ""
+### Один співробітник може проводити від 0 до безлічі зустрічей у клубі, але кожна зустріч мусить мати одного і лише одного організатора 
+CLIENT }o--o{ CLUB_MEETING: ""
+### Безліч кліентів можуть відвідувати або 0 або безліч зустріче
+BOOK |o--o{ CLUB_MEETING: ""
+### Або 1 або нуль книг можуть обговорюватися використовуватися під час конкретної зустрічі, яких може не бути взагалі, або бути безліч 
+BOARD_GAME |o--o{ CLUB_MEETING: ""
+###  Або 1 або нуль ігор можуть використовуватися під час конкретної зустрічі, яких може не бути взагалі, або бути безліч 
 ORDER ||--|{ ORDER_ITEM : ""
-BOOK ||--o{ ORDER_ITEM : ""
-BOOK ||--o{ CLUB_MEETING : ""
+### замовлення може мати або 1 або безліч одиниць товару, але якщо одиниця замовлена, то вона обов'язково прив'язується до конкретного замовлення 
+BOOK_COPY ||--o{ RENTAL : ""
+### лише 1 конкретна копія книги може мати або 0 або безліч оренд
+BOOK ||--|{ BOOK_COPY: ""
+### книга може мати або як мінімум 1 або безліч копій таких книг на складі 
+BOOK |o--o{ ORDER_ITEM : ""
+###  
+BOARD_GAME |o--o{ ORDER_ITEM: ""
+### 
+PRODUCT ||--o{BOOK: ""
+### 
+PRODUCT ||--o{BOARD_GAME: ""
+###
+PRODUCT |o--o{ORDER_ITEM: ""
+###
 
 STAFF {
     int id PK
@@ -35,11 +59,34 @@ CLIENT {
 
 BOOK {
     int id PK
+    int product_id FK
     string author
+    string title
     int year
     string genre
+}
+
+BOARD_GAME {
+    int id PK
+    int product_id FK
+    string name
+    int age_restriction
+    int number_of_players
+}
+
+PRODUCT {
+    int id PK
+    string name
     decimal price
     int number_in_stock
+}
+
+
+BOOK_COPY {
+    int id PK
+    int book_id FK
+    string uniq_number
+    string status
 }
 
 ORDER {
@@ -55,7 +102,7 @@ RENTAL {
     int id PK
     int client_id FK 
     int staff_id FK 
-    int book_id FK
+    int copy_id FK
     date rental_date
     date return_date
 }
@@ -63,6 +110,7 @@ RENTAL {
 CLUB_MEETING {
     int id PK
     int book_id FK
+    int game_id FK
     int staff_id FK
     date meeting_date
 }
@@ -70,8 +118,7 @@ CLUB_MEETING {
 ORDER_ITEM {
     int id PK
     int order_id FK
-    int book_id FK
-    int game_id FK
+    int product_id FK
     int quantity
-    decimal unit_price
+    decimal unit_price 
 }
