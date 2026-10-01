@@ -10,10 +10,8 @@ BOARD_GAME |o--o{ CLUB_MEETING: ""
 ORDER ||--|{ ORDER_ITEM : ""
 BOOK_COPY ||--o{ RENTAL : ""
 BOOK ||--|{ BOOK_COPY: ""
-BOOK |o--o{ ORDER_ITEM : ""
-BOARD_GAME |o--o{ ORDER_ITEM: ""
-PRODUCT ||--o{BOOK: ""
-PRODUCT ||--o{BOARD_GAME: ""
+PRODUCT ||--o|BOOK: ""
+PRODUCT ||--o|BOARD_GAME: ""
 PRODUCT |o--o{ORDER_ITEM: ""
 
 STAFF {
