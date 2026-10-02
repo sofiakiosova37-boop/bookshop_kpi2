@@ -1,11 +1,13 @@
 Entities and their attributes
 Staff: id, name, surname, job 
-Book: id, author, year, genre, price, number_in_stock
+Book: id, product_id, author,title, year, genre
+Board_Game: id, product_id, name, age_restriction, number_of_players
+Book_Copy: id, book_id, uniq_number, status
 Client: id, surname, name, phone, email, bonuses
 Order: id, order_date, price, client_id, staff_id, status
-Rental: id, rental_date, return_date, client_id, staff_id, book_id, 
+Rental: id, copy_id, rental_date, return_date, client_id, staff_id, book_id, 
 ClubMeeting: id, meeting_date, book_id, staff_id
-Order_Item: id, order_id, book_id, quantity, unit_price
+Order_Item: id, order_id, product_id, quantity, unit_price
 
 erDiagram
 CLIENT ||--o{ ORDER : ""
