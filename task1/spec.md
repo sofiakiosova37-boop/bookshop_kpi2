@@ -1,7 +1,7 @@
 Entities and their attributes
 Staff: id, name, surname, job 
 Book: id, product_id, author,title, year, genre
-Board_Game: id, product_id, name, age_restriction, number_of_players
+Board_Game: id, product_id, title, age_restriction, number_of_players
 Book_Copy: id, book_id, uniq_number, status
 Client: id, surname, name, phone, email, bonuses
 Order: id, order_date, price, client_id, staff_id, status
@@ -22,10 +22,8 @@ STAFF ||--o{ CLUB_MEETING : ""
 ### Один співробітник може проводити від 0 до безлічі зустрічей у клубі, але кожна зустріч мусить мати одного і лише одного організатора 
 CLIENT }o--o{ CLUB_MEETING: ""
 ### Безліч кліентів можуть відвідувати або 0 або безліч зустріче
-BOOK |o--o{ CLUB_MEETING: ""
-### Або 1 або нуль книг можуть обговорюватися використовуватися під час конкретної зустрічі, яких може не бути взагалі, або бути безліч 
-BOARD_GAME |o--o{ CLUB_MEETING: ""
-###  Або 1 або нуль ігор можуть використовуватися під час конкретної зустрічі, яких може не бути взагалі, або бути безліч 
+PRODUCT ||--o{ CLUB_MEETING : ""
+### Один товар із каталогу може бути темою для 0 або безлічі клубних зустрічей , але кожна клубна зустріч обов'язково присвячена строго одному товару з каталогу
 ORDER ||--|{ ORDER_ITEM : ""
 ### замовлення може мати або 1 або безліч одиниць товару, але якщо одиниця замовлена, то вона обов'язково прив'язується до конкретного замовлення 
 BOOK_COPY ||--o{ RENTAL : ""
@@ -67,7 +65,7 @@ BOOK {
 BOARD_GAME {
     int id PK
     int product_id FK
-    string name
+    string title
     int age_restriction
     int number_of_players
 }
@@ -107,8 +105,7 @@ RENTAL {
 
 CLUB_MEETING {
     int id PK
-    int book_id FK
-    int game_id FK
+    int product_id FK
     int staff_id FK
     date meeting_date
 }
