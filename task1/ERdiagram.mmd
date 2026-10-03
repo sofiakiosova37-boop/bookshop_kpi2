@@ -7,11 +7,14 @@ STAFF ||--o{ CLUB_MEETING : ""
 CLIENT }o--o{ CLUB_MEETING: ""
 PRODUCT ||--o{ CLUB_MEETING : ""
 ORDER ||--|{ ORDER_ITEM : ""
-BOOK_COPY ||--o{ RENTAL : ""
+PRODUCT ||--o{ RENTAL : ""
 BOOK ||--|{ BOOK_COPY: ""
+BOARD_GAME||--|{ GAME_COPY: ""
 PRODUCT ||--o|BOOK: ""
 PRODUCT ||--o|BOARD_GAME: ""
-PRODUCT |o--o{ORDER_ITEM: ""
+PRODUCT ||--o{ORDER_ITEM: ""
+BOOK_COPY ||--o{ RENTAL : ""
+GAME_COPY ||--o{ RENTAL : ""
 
 STAFF {
     int id PK
@@ -61,6 +64,13 @@ BOOK_COPY {
     string status
 }
 
+GAME_COPY {
+    int id PK
+    int board_game_id FK
+    string uniq_number
+    string status
+}
+
 ORDER {
     int id PK
     int client_id FK
@@ -74,7 +84,7 @@ RENTAL {
     int id PK
     int client_id FK 
     int staff_id FK 
-    int copy_id FK
+    int product_id FK
     date rental_date
     date return_date
 }

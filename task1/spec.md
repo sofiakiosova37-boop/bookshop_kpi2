@@ -3,6 +3,7 @@ Staff: id, name, surname, job
 Book: id, product_id, author,title, year, genre
 Board_Game: id, product_id, title, age_restriction, number_of_players
 Book_Copy: id, book_id, uniq_number, status
+Game_Copy: id, board_game_id, uniq_number, status
 Client: id, surname, name, phone, email, bonuses
 Order: id, order_date, price, client_id, staff_id, status
 Rental: id, copy_id, rental_date, return_date, client_id, staff_id, book_id, 
@@ -26,7 +27,7 @@ PRODUCT ||--o{ CLUB_MEETING : ""
 ### Один товар із каталогу може бути темою для 0 або безлічі клубних зустрічей , але кожна клубна зустріч обов'язково присвячена строго одному товару з каталогу
 ORDER ||--|{ ORDER_ITEM : ""
 ### замовлення може мати або 1 або безліч одиниць товару, але якщо одиниця замовлена, то вона обов'язково прив'язується до конкретного замовлення 
-BOOK_COPY ||--o{ RENTAL : ""
+PRODUCT ||--o{ RENTAL : ""
 ### лише 1 конкретна копія книги може мати або 0 або безліч оренд
 BOOK ||--|{ BOOK_COPY: ""
 ### книга може мати або як мінімум 1 або безліч копій таких книг на складі 
@@ -34,8 +35,10 @@ PRODUCT ||--o|BOOK: ""
 ### кожен товар може бути або книгоб або грою, тоді книгою він не буде, але кожна книга відповідає строго одному товару 
 PRODUCT ||--o|BOARD_GAME: ""
 ### кожен товар може бути або грою або книгою, тоді грою він не буде, але кожна гра відповідає строго одному товару 
-PRODUCT |o--o{ORDER_ITEM: ""
+PRODUCT ||--o{ORDER_ITEM: ""
 ### кожен товар може продаватись або у 0 або безлічі позицій у замовлені, але кожна позиція має конкретно вказувати на певний 1 товар 
+BOOK_COPY ||--o{ RENTAL : ""
+GAME_COPY ||--o{ RENTAL : ""
 
 STAFF {
     int id PK
@@ -85,6 +88,13 @@ BOOK_COPY {
     string status
 }
 
+GAME_COPY {
+    int id PK
+    int board_game_id FK
+    string uniq_number
+    string status
+}
+
 ORDER {
     int id PK
     int client_id FK
@@ -98,7 +108,7 @@ RENTAL {
     int id PK
     int client_id FK 
     int staff_id FK 
-    int copy_id FK
+    int product_id FK
     date rental_date
     date return_date
 }
