@@ -1,0 +1,14 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam usecase {
+    BackgroundColor LightPurple
+    BorderColor DarkSlateGray
+    ArrowColor DarkSlateGray
+}
+
+actor "Гість" as Guest
+actor "Клієнт" as Client
+actor "Співробітник" as Staff
+@enduml
