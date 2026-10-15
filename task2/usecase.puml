@@ -58,4 +58,9 @@ Staff --> UC15
 
 UC8 --EN
 
+UC13 .> UC8 : <<include>>
+UC1 .> UC8 : <<include>>
+UC3 .> UC8 : <<include>>
+UC14 .> UC8 : <<include>>
+
 @enduml
