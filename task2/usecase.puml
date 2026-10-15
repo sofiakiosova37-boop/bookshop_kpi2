@@ -20,7 +20,7 @@ rectangle "Book club" {
     usecase "checkout of purchase" as UC2
     usecase "checkout of rent" as UC3
     usecase "search and filter item" as UC4
-    usecase "meeting details" as UC5
+    usecase "see meeting details" as UC5
     usecase "add meeting" as UC6
     usecase "cancel meeting" as UC7
     usecase "send email notification" as UC8
@@ -34,5 +34,28 @@ rectangle "Book club" {
     usecase "view bonus balance" as UC16
 }
 
+Guest --> UC1
+Guest --> UC4
+Guest --> UC5
+
+Client -->UC4
+Client -->UC5
+Client -->UC10
+Client -->UC12
+Client -->UC13
+Client -->UC14
+Client -->UC16
+
+Staff --> UC2
+Staff --> UC3
+Staff --> UC5
+Staff --> UC6
+Staff --> UC7
+Staff --> UC9
+Staff --> UC11
+Staff --> UC12
+Staff --> UC15
+
+UC8 --EN
 
 @enduml
