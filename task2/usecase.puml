@@ -8,7 +8,31 @@ skinparam usecase {
     ArrowColor DarkSlateGray
 }
 
-actor "Гість" as Guest
-actor "Клієнт" as Client
-actor "Співробітник" as Staff
+actor "Guest" as Guest
+actor "Client" as Client
+actor "Staff" as Staff
+actor "Email Notifications" as EN
+
+Guest <|-- Client
+
+rectangle "Book club" {
+    usecase "registration" as UC1
+    usecase "checkout of purchase" as UC2
+    usecase "checkout of rent" as UC3
+    usecase "search and filter item" as UC4
+    usecase "meeting details" as UC5
+    usecase "add meeting" as UC6
+    usecase "cancel meeting" as UC7
+    usecase "send email notification" as UC8
+    usecase "manage bonuses" as UC9
+    usecase "edit profile info" as UC10
+    usecase "edit meeting" as UC11
+    usecase "view purchase and rental history" as UC12
+    usecase "register for a meeting" as UC13
+    usecase "return rental item" as UC14
+    usecase "add product" as UC15
+    usecase "view bonus balance" as UC16
+}
+
+
 @enduml
