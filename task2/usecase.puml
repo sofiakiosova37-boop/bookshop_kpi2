@@ -11,9 +11,10 @@ skinparam usecase {
 actor "Guest" as Guest
 actor "Client" as Client
 actor "Staff" as Staff
-actor "Email Notifications" as EN
 
 Guest <|-- Client
+
+actor "Email Notifications" as EN <<system>>
 
 rectangle "Book club" {
     usecase "registration" as UC1
