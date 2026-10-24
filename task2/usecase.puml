@@ -14,8 +14,6 @@ actor "Staff" as Staff
 
 Guest <|-- Client
 
-actor "Email Notifications" as EN <<system>>
-
 rectangle "Book club" {
     usecase "registration" as UC1
     usecase "checkout of purchase" as UC2
@@ -24,15 +22,16 @@ rectangle "Book club" {
     usecase "see meeting details" as UC5
     usecase "add meeting" as UC6
     usecase "cancel meeting" as UC7
-    usecase "send email notification" as UC8
     usecase "manage bonuses" as UC9
     usecase "edit profile info" as UC10
     usecase "edit meeting" as UC11
     usecase "view purchase and rental history" as UC12
     usecase "register for a meeting" as UC13
     usecase "return rental item" as UC14
-    usecase "add product" as UC15
-    usecase "view bonus balance" as UC16
+    usecase "pay with bonuses" as UC15
+    usecase "add product" as UC16
+    usecase "calculate fine" as UC17
+    usecase "view bonus balance" as UC18
 }
 
 Guest --> UC1
@@ -44,7 +43,7 @@ Client -->UC5
 Client -->UC10
 Client -->UC12
 Client -->UC13
-Client -->UC16
+Client -->UC18
 
 Staff --> UC2
 Staff --> UC3
@@ -54,13 +53,10 @@ Staff --> UC7
 Staff --> UC9
 Staff --> UC11
 Staff --> UC12
-Staff --> UC15
+Staff --> UC14
+Staff --> UC16
 
-UC8 --EN
-
-UC13 .> UC8 : <<include>>
-UC1 .> UC8 : <<include>>
-UC3 .> UC8 : <<include>>
-UC14 .> UC8 : <<include>>
+UC15 ..> UC2 : <<extend>>
+UC17 ..> UC14 : <<extend>>
 
 @enduml
