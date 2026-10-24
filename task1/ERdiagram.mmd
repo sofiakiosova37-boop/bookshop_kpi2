@@ -87,6 +87,8 @@ RENTAL {
     int product_id FK
     date rental_date
     date return_date
+    decimal fine_amount
+    string status
 }
 
 CLUB_MEETING {
@@ -94,6 +96,10 @@ CLUB_MEETING {
     int product_id FK
     int staff_id FK
     date meeting_date
+    string title
+    string loction
+    int capacity
+    string status 
 }
 
 ORDER_ITEM {

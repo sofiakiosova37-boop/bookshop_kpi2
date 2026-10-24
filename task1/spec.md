@@ -1,13 +1,13 @@
 Entities and their attributes
 Staff: id, name, surname, job 
-Book: id, product_id, author,title, year, genre
+Book: id, product_id, author, title, year, genre
 Board_Game: id, product_id, title, age_restriction, number_of_players
 Book_Copy: id, book_id, uniq_number, status
 Game_Copy: id, board_game_id, uniq_number, status
 Client: id, surname, name, phone, email, bonuses
 Order: id, order_date, price, client_id, staff_id, status
-Rental: id, copy_id, rental_date, return_date, client_id, staff_id, book_id, 
-ClubMeeting: id, meeting_date, book_id, staff_id
+Rental: id, copy_id, rental_date, return_date, client_id, staff_id, status, fine_amount
+ClubMeeting: id, title, loction, capacity, status, meeting_date, staff_id
 Order_Item: id, order_id, product_id, quantity, unit_price
 
 erDiagram
@@ -111,6 +111,8 @@ RENTAL {
     int product_id FK
     date rental_date
     date return_date
+    decimal fine_amount
+    string status
 }
 
 CLUB_MEETING {
@@ -118,6 +120,10 @@ CLUB_MEETING {
     int product_id FK
     int staff_id FK
     date meeting_date
+    string title
+    string loction
+    int capacity
+    string status 
 }
 
 ORDER_ITEM {
