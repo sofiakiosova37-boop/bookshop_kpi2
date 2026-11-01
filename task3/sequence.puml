@@ -14,6 +14,7 @@ service -> DB: checks client`s history
 service <-- DB: clients has no loans
 service -> DB: check status of  book
 service <-- DB: return rental status 
+
 alt status "available"
     service -> DB: creates a new record
     service -> DB: refresh record in RENTAL from available to in rent
@@ -21,15 +22,24 @@ alt status "available"
     notify -> client: send email
     ui <- service: succesfull message
     staff <-- ui: Displays a success message
+
 else status "in rent"
     ui <-- service: Error
     staff <-- ui: Shows errоr message 
+
     loop Until an available copy is found
         staff -> ui: Enter another book's unique number
         ui -> service: checkAlternativeBook()
         service -> DB: check status of alternative book
         service <-- DB: return rental status
     end loop
+
+    service -> DB: creates a new record in RENTAL
+    service -> DB: refresh record in Book_Copy to in rent
+    service -> notif: sendEmailNotification()
+    notif -> cus: send email confirmation
+    ui <- service: succesfull message
+    staff <-- ui: Displays a success message
 end alt
 
 opt Клієнт бажає використати бонуси
