@@ -13,12 +13,18 @@ ui -> service: forwards the request to check client
 service -> DB: checks client`s history 
 service <-- DB: clients has no loans
 service -> DB: check status of  book
-service <-- DB: book is available
-service -> DB: creates a new record
-service -> DB: refresh record in RENTAL from available to in rent
-service -> notify: initialize confirmation call
-notify -> client: send email
-ui <- service: succesfull message
+service <-- DB: return rental status 
+alt status "available"
+    service -> DB: creates a new record
+    service -> DB: refresh record in RENTAL from available to in rent
+    service -> notify: sendEmailNotification() - initialize confirmation call
+    notify -> client: send email
+    ui <- service: succesfull message
+    staff <-- ui: Displays a success message
+else status "in rent"
+    ui <-- service: Error
+    staff <-- ui: Shows errоr message 
+end alt
 
 
 @enduml
