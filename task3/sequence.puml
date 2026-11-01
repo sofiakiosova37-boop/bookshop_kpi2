@@ -72,4 +72,13 @@ service -> DB: find an active rental for this copy of the book
 service <-- DB: Returns rental data (issue date, scheduled return date)
 service -> service: calculateDaysOverdue() 
 
+alt deadline not exceeded (on-time return)
+    service -> DB: rental status apdated status = "повернено"
+    service -> DB: update status in Book/Game copy "available" 
+    service -> notif: sendReturnConfirmation()
+    notif -> customer: Sends email regarding successful return
+    ui <-- service: Success (Book accepted without penalties)
+    staff <-- ui: Displays success message
+
+
 @enduml
