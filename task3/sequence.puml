@@ -1,0 +1,19 @@
+### Діаграма 1: Оформлення оренди (є в наявності/ немає)
+@startuml
+actor Співробітник as staff 
+participant WebInterface as ui
+actor Кліент as customer
+database База as Database
+participant NotificationService as notif
+
+@enduml
+
+### Діаграма 2: Повернення (вчасно / прострочення)
+@startuml
+actor Співробітник as staff 
+participant WebInterface as ui
+actor Кліент as customer
+database База as Database
+participant NotificationService as notif
+
+@enduml
