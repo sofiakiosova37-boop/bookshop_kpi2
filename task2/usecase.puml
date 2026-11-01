@@ -9,10 +9,10 @@ skinparam usecase {
 }
 
 actor "Guest" as Guest
-actor "Client" as Client
+actor "Customer" as Customer
 actor "Staff" as Staff
 
-Guest <|-- Client
+Guest <|-- Customer
 
 rectangle "Book club" {
     usecase "registration" as UC1
