@@ -57,15 +57,18 @@ cus <-- staff: here your book and rental receipt
 
 @enduml
 
+
+
 ### Діаграма 2: Повернення (вчасно / прострочення)
 @startuml
 actor Співробітник as staff 
 participant WebInterface as ui
-actor Кліент as customer
-database База as Database
-participant NotificationService as notif
+actor Кліент as cus
+database База as DB
+participant RentalService as service
+participant NotificationService as notify
 
-customer -> staff: Brings the book for return and provides details
+cus -> staff: Brings the book for return and provides details
 staff -> ui: Enter book copy unique number & return request
 ui -> service: returnRentalRequest()
 service -> DB: find an active rental for this copy of the book
@@ -75,10 +78,29 @@ service -> service: calculateDaysOverdue()
 alt deadline not exceeded (on-time return)
     service -> DB: rental status apdated status = "повернено"
     service -> DB: update status in Book/Game copy "available" 
-    service -> notif: sendReturnConfirmation()
-    notif -> customer: Sends email regarding successful return
+    service -> notify: sendReturnConfirmation()
+    notify -> cus: Sends email regarding successful return
     ui <-- service: Success (Book accepted without penalties)
     staff <-- ui: Displays success message
 
+else Deadline missed (overdue / late)
+    service -> DB: rental status apdated status = "overdue"
+    service -> DB: update status in Book/Game copy "available" 
+    service -> service: calculateFineAmount()
+    service -> DB:insert Fine with status "unpaid"
+    service <-- DB: Fine record created
+    service -> notify: sendFineNotification()
+    notify -> cus: Sends an email with the late penalty amount
+    ui <-- service: Success with a warning (Book accepted, fine imposed)
+    staff <-- ui: Displays the fine amount and prompts the client to pay it
+    cus -> staff: Pays the fine
+    staff -> ui: Registers the fine payment
+    ui -> service: sens request to pay fine
+    service -> DB: update fine status to "paid
+    service <-- DB: Fine settled
+    ui <-- service: Fine successfully paid
+    staff <-- ui: Displays payment confirmation
+end alt
+cus <-- staff: Thank you, the return has been processed
 
 @enduml
