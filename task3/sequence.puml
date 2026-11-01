@@ -5,7 +5,7 @@ participant WebInterface as ui
 participant RentalService as service
 actor Кліент as cus
 database База as DB
-participant NotificationService as notif
+participant NotificationService as notify
 
 cus -> staff: ask for book 
 staff -> ui: enter clients id & book uniq number
@@ -19,7 +19,7 @@ alt status "available"
     service -> DB: creates a new record
     service -> DB: refresh record in RENTAL from available to in rent
     service -> notify: sendEmailNotification() - initialize confirmation call
-    notify -> client: send email
+    notify -> cus: send email
     ui <- service: succesfull message
     staff <-- ui: Displays a success message
 
@@ -36,8 +36,8 @@ else status "in rent"
 
     service -> DB: creates a new record in RENTAL
     service -> DB: refresh record in Book_Copy to in rent
-    service -> notif: sendEmailNotification()
-    notif -> cus: send email confirmation
+    service -> notify: sendEmailNotification()
+    notify -> cus: send email confirmation
     ui <- service: succesfull message
     staff <-- ui: Displays a success message
 end alt
@@ -45,8 +45,8 @@ end alt
 opt Клієнт бажає використати бонуси
     staff -> ui: Enter the number of bonus points to redeem
     ui -> service: applyBonuses
-    service -> db: Update Client amount of bonuses
-    service <-- db: Bonuses deducted
+    service -> DB: Update Client amount of bonuses
+    service <-- DB: Bonuses deducted
     service -> notify: sendBonusNotification()
     notify -> cus: Sends an email regarding the deduction of bonus points
     ui <-- service: Succes
