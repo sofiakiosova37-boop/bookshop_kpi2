@@ -24,8 +24,26 @@ alt status "available"
 else status "in rent"
     ui <-- service: Error
     staff <-- ui: Shows errоr message 
+    loop Until an available copy is found
+        staff -> ui: Enter another book's unique number
+        ui -> service: checkAlternativeBook()
+        service -> DB: check status of alternative book
+        service <-- DB: return rental status
+    end loop
 end alt
 
+opt Клієнт бажає використати бонуси
+    staff -> ui: Enter the number of bonus points to redeem
+    ui -> service: applyBonuses
+    service -> db: Update Client amount of bonuses
+    service <-- db: Bonuses deducted
+    service -> notify: sendBonusNotification()
+    notify -> cus: Sends an email regarding the deduction of bonus points
+    ui <-- service: Succes
+    staff <-- ui: Displays a message confirming the successful deduction of bonus points
+end opt
+
+cus <-- staff: here your book and rental receipt
 
 @enduml
 
