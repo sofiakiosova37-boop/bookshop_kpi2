@@ -61,3 +61,15 @@
 8) RentalService оновлює статус примірника на "доступно"
 9) NotificationService надсилає клієнту email-сповіщення про штраф і прострочення
 10) WebInterface виводить Staff попередження про наявність штрафу
+
+## Опціональний крок (Optional Flow): Списання бонусів
+# Prerequisites: 
+Якщо клієнт під час оформлення оренди має накопичені бонуси і бажає їх використати:
+1) Staff вводить через WebInterface кількість бонусів для списання
+2) WebInterface передає запит у RentalService
+3) RentalService звертається до Database і виконує оновлення бонусів
+4) Database підтверджує списання бонусів
+5) RentalService ініціює відправку сповіщення через NotificationService
+6) NotificationService надсилає клієнту на пошту email із оновленим балансом бонусів.
+7) RentalService повертає у WebInterface повідомлення про успіх,
+8) WebInterface виводить Staff сповіщення про те, що бонуси успішно списано
