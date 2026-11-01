@@ -2,9 +2,24 @@
 @startuml
 actor Співробітник as staff 
 participant WebInterface as ui
-actor Кліент as customer
-database База as Database
+participant RentalService as service
+actor Кліент as cus
+database База as DB
 participant NotificationService as notif
+
+cus -> staff: ask for book 
+staff -> ui: enter clients id & book uniq number
+ui -> service: forwards the request to check client
+service -> DB: checks client`s history 
+service <-- DB: clients has no loans
+service -> DB: check status of  book
+service <-- DB: book is available
+service -> DB: creates a new record
+service -> DB: refresh record in RENTAL from available to in rent
+service -> notify: initialize confirmation call
+notify -> client: send email
+ui <- service: succesfull message
+
 
 @enduml
 
