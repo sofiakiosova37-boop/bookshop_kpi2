@@ -65,4 +65,11 @@ actor Кліент as customer
 database База as Database
 participant NotificationService as notif
 
+customer -> staff: Brings the book for return and provides details
+staff -> ui: Enter book copy unique number & return request
+ui -> service: returnRentalRequest()
+service -> DB: find an active rental for this copy of the book
+service <-- DB: Returns rental data (issue date, scheduled return date)
+service -> service: calculateDaysOverdue() 
+
 @enduml
