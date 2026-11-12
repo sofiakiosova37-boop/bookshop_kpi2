@@ -1,5 +1,41 @@
 # firts scenarion (succesfull rental)
+# до чого йде стрілка те у мене вкл або викл
 @startuml
+actor Співробітник as staff
+participant WebInterface as ui
+participant RentalService as service
+actor Клієнт as cus
+database База as DB
+participant NotificationService as notify
+
+cus -> staff: ask for book
+staff -> ui ++: enter client's id & book unique number
+ui -> service ++: forwards the request to check client
+service -> DB ++: checks client's fines 
+DB <-- service --: client has no fines 
+service -> DB ++: check status of Book_Copy
+DB <-- service --: return status "доступно"
+
+opt Клієнт бажає використати бонуси
+    staff -> ui ++: enter the number of bonus points to redeem
+    ui -> service ++: applyBonuses
+    service -> DB ++: update Client amount of bonuses
+    DB <-- service --: bonuses deducted
+    service -> notify ++: sendBonusNotification()
+    notify -> cus: sends an email regarding the deduction of bonus points
+    service <-- ui --: success
+    ui <-- staff: displays a message confirming the deduction of bonus points
+end
+
+service -> DB ++: creates a new record in rental
+DB <-- service --: record created
+service -> DB ++: refresh record in Book_Copy from "доступно" to "в оренді"
+DB <-- service --: status updated
+service -> notify ++: sendEmailNotification() for initializizing confirmation call
+notify -> cus: send email confirmation
+service <-- ui --: successful message
+ui <-- staff --: displays a success message
+cus <-- staff: here your book and rental receipt
 @enduml
 
 # second scenarion (book is not available)
