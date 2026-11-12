@@ -43,6 +43,44 @@ cus <-- staff: here your book and rental receipt
 
 # second scenarion (book is not available)
 @startuml
+actor Співробітник as staff
+participant WebInterface as ui
+participant RentalService as service
+actor Клієнт as cus
+database База as DB
+participant NotificationService as notify
+
+cus -> staff: ask for book
+staff -> ui ++: enter client's id & book unique number
+ui -> service ++: forwards the request to check client
+service -> DB ++: checks client's fines
+service <-- DB --: client has no fines
+service -> DB ++: check status of Book_Copy
+service <-- DB --: return status "в оренді"
+
+alt status "в оренді"
+    ui <-- service: error
+    staff <-- ui: shows error message "Примірник недоступний" and suggests another copy
+
+    loop (Until an available copy is found)
+        staff -> ui: enter another book's unique number
+        ui -> service: checkAlternativeBook()
+        service -> DB ++: check status of alternative Book_Copy
+        service <-- DB --: return status
+    end loop
+
+    service -> DB ++: creates a new record in rental
+    service <-- DB --: record created
+    service -> DB ++: refresh record in Book_Copy from "доступно" to "в оренді"
+    service <-- DB --: status updated
+    service -> notify ++: sendEmailNotification() for initializing confirmation email
+    notify -> cus: send email confirmation
+    service <-- notify --: notification sent
+end alt
+
+ui <-- service --: successful message
+staff <-- ui --: displays a success message
+cus <-- staff: here your book and rental receipt
 @enduml
 
 # third scenarion (return in time)
