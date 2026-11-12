@@ -76,6 +76,7 @@ alt status "в оренді"
     service -> notify ++: sendEmailNotification() for initializing confirmation email
     notify -> cus: send email confirmation
     service <-- notify --: notification sent
+else status "доступно"
 end alt
 
 ui <-- service --: successful message
@@ -107,6 +108,7 @@ alt deadline not exceeded (on-time return)
     service -> notify ++: sendReturnConfirmation()
     notify -> cus: sends email regarding successful return
     service <-- notify --: notification sent
+else deadline missed (overdue)
 end alt
 
 ui <-- service --: success (book accepted without penalties)
@@ -116,6 +118,39 @@ cus <-- staff: thank you, the return has been processed
 
 # fourth scenarion (return outdated)
 @startuml
+actor Співробітник as staff
+participant WebInterface as ui
+participant RentalService as service
+actor Клієнт as cus
+database База as DB
+participant NotificationService as notify
+
+cus -> staff: brings the book for return
+staff -> ui ++: enter book copy unique number & return request
+ui -> service ++: returnRentalRequest()
+service -> DB ++: find an active rental for this copy
+service <-- DB --: returns rental data (issue date, return_date)
+service -> service: compare current date with return_date  calculateDaysOverdue() 
+
+alt deadline missed (overdue)
+    service -> DB ++: update status in rental to "позачасом"
+    service <-- DB --: status updated
+    service -> service: calculateFineAmount()
+    service -> DB ++: write fine_amount in rental
+    service <-- DB --: fine saved
+    service -> DB ++: update Client status: debt, new rentals blocked
+    service <-- DB --: client blocked
+    service -> DB ++: update status in Book_Copy to "доступно"
+    service <-- DB --: status updated
+    service -> notify ++: sendFineNotification()
+    notify -> cus: sends an email about the late penalty amount
+    service <-- notify --: notification sent
+else deadline not exceeded
+end alt
+
+ui <-- service --: success with a warning (book accepted, fine imposed)
+staff <-- ui --: displays the fine amount and warning
+cus <-- staff: the return has been processed, please pay the fine
 @enduml
 
 
