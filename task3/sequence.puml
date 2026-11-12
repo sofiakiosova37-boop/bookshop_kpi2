@@ -1,3 +1,59 @@
+# firts scenarion (succesfull rental)
+@startuml
+@enduml
+
+# second scenarion (book is not available)
+@startuml
+@enduml
+
+# third scenarion (return in time)
+@startuml
+@enduml
+
+# firts scenarion (return outdated)
+@startuml
+@enduml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### outdated diagrams since it is 2 scenarion instead of 4
+
 ### Діаграма 1: Оформлення оренди (є в наявності/ немає)
 @startuml
 actor Співробітник as staff 
