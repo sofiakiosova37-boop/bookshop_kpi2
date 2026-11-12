@@ -54,6 +54,7 @@ CLIENT {
     string phone
     string email
     int bonuses
+    int status
 }
 
 BOOK {
