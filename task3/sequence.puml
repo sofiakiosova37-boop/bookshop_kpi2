@@ -38,7 +38,7 @@ notify -> cus: send email confirmation
 service <-- notify --: notification sent
 ui <-- service --: successful message
 staff <-- ui --: displays a success message
-cus <-- staff: here your book and rental receipt
+staff -> cus: here your book and rental receipt
 @enduml
 
 # second scenarion (book is not available)
@@ -58,7 +58,7 @@ service <-- DB --: client has no fines
 service -> DB ++: check status of Book_Copy
 service <-- DB --: return status "в оренді"
 
-alt status "в оренді"
+opt status "в оренді"
     ui <-- service: error
     staff <-- ui: shows error message "Примірник недоступний" and suggests another copy
 
@@ -68,20 +68,18 @@ alt status "в оренді"
         service -> DB ++: check status of alternative Book_Copy
         service <-- DB --: return status
     end loop
+end
 
-    service -> DB ++: creates a new record in rental
-    service <-- DB --: record created
-    service -> DB ++: refresh record in Book_Copy from "доступно" to "в оренді"
-    service <-- DB --: status updated
-    service -> notify ++: sendEmailNotification() for initializing confirmation email
-    notify -> cus: send email confirmation
-    service <-- notify --: notification sent
-else status "доступно"
-end alt
-
+service -> DB ++: creates a new record in rental
+service <-- DB --: record created
+service -> DB ++: refresh record in Book_Copy from "доступно" to "в оренді"
+service <-- DB --: status updated
+service -> notify ++: sendEmailNotification() for initializing confirmation email
+notify -> cus: send email confirmation
+service <-- notify --: notification sent
 ui <-- service --: successful message
 staff <-- ui --: displays a success message
-cus <-- staff: here your book and rental receipt
+staff -> cus: here your book and rental receipt
 @enduml
 
 # third scenarion (return in time)
