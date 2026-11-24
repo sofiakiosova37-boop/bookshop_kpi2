@@ -37,6 +37,7 @@ endif
 |RentalService&Database|
 :Create a rental record (customer, item copy, staff_id, dates);
 else (return an item copy Branch B)
+|Staff|
 :Enter the item copy number and the return request;
 |WebInterface|
 :Forward the return request to RentalService;
