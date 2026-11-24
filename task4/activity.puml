@@ -8,12 +8,12 @@ if (Take in rent?) then (Arrange a rental: Branch A)
 |WebInterface|
 :Submit the request to RentalService;
 |RentalService&Database|
-:Check for fines and client blocks in the database;
-if (Client blocked due to debt?) then (rejection)
+:Check for fines and Customer blocks in the database;
+if (Customer blocked due to debt?) then (rejection)
 |WebInterface|
 :Display "Rental not possible: outstanding debt";
 |Staff|
-:Inform the client of the rejection;
+:Inform the Customer of the rejection;
 stop
 else (no debt)
 endif
@@ -30,12 +30,12 @@ if (Customer wants to redeem bonus points?) then (yes)
 :Redeem bonus points and update balance;
 |NotificationService|
 :Send email regarding updated bonus balance>
-|Client|
+|Customer|
 :Receive email regarding bonus points<
 else (no)
 endif
 |RentalService&Database|
-:Create a rental record (client, item copy, staff_id, dates);
+:Create a rental record (customer, item copy, staff_id, dates);
 else (return an item copy Branch B)
 :Enter the item copy number and the return request;
 |WebInterface|
@@ -54,7 +54,7 @@ endif
 :Compare the current date with the return_date (calculateDaysOverdue());
 if (Current date is past the return_date?) then (yes)
 :Set status to "overdue", calculate and record the fine_amount;
-:Register the client's debt and block new rentals;
+:Register the Customer's debt and block new rentals;
 else (no)
 :Set Rental.status = "returned";
 endif
@@ -63,13 +63,13 @@ fork
 :Update the status of the item copy ("on rent" or "available");
 fork again
 |NotificationService|
-:Send the appropriate email to the client (rental confirmation, return, or fine)>
-|Client|
+:Send the appropriate email to the Customer (rental confirmation, return, or fine)>
+|Customer|
 :Receive email notification<
 end fork
 |WebInterface|
 :Display the final result to the staff>
 |Staff|
-:Receive the result and convey it to the client<
+:Receive the result and convey it to the Customer<
 stop
 @enduml
