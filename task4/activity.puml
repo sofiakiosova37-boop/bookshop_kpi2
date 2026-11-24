@@ -21,16 +21,18 @@ if (Customer blocked due to debt?) then (rejection)
 stop
 else (no debt)
 endif
+
 |RentalService&Database|
 repeat
 :Check the status of a copy of an item (book or game);
 |Staff|
-backward: Received "Copy unavailable" please enter the number of another copy;
+backward :Received "Copy unavailable" please enter the number of another copy;
 repeat while (Status is "on rent"?) is (yes) not (no)
+
 |Staff|
 if (Customer wants to redeem bonus points?) then (yes)
 :Enter number of bonus points;
-|RentalService and Database|
+|RentalService&Database|
 :Redeem bonus points and update balance;
 |NotificationService|
 :Send email regarding updated bonus balance>
@@ -55,6 +57,7 @@ if (Rental information found?) then (no)
 stop
 else (yes)
 endif
+
 |RentalService&Database|
 :Compare the current date with the return_date (calculateDaysOverdue());
 if (Current date is past the return_date?) then (yes)
@@ -63,6 +66,8 @@ if (Current date is past the return_date?) then (yes)
 else (no)
 :Set Rental.status = "returned";
 endif
+endif
+
 |RentalService&Database|
 fork
 :Update the status of the item copy ("on rent" or "available");
