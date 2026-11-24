@@ -34,9 +34,42 @@ if (Customer wants to redeem bonus points?) then (yes)
 :Receive email regarding bonus points<
 else (no)
 endif
-
-
-
-
+|RentalService&Database|
+:Create a rental record (client, item copy, staff_id, dates);
+else (return an item copy Branch B)
+:Enter the item copy number and the return request;
+|WebInterface|
+:Forward the return request to RentalService;
+|RentalService&Database|
+:Retrieve information regarding the rental of the item copy;
+if (Rental information found?) then (no)
+|WebInterface|
+:Display "No active rental found">
+|Staff|
+:Error received<
+stop
+else (yes)
+endif
+|RentalService&Database|
+:Compare the current date with the return_date (calculateDaysOverdue());
+if (Current date is past the return_date?) then (yes)
+:Set status to "overdue", calculate and record the fine_amount;
+:Register the client's debt and block new rentals;
+else (no)
+:Set Rental.status = "returned";
+endif
+|RentalService&Database|
+fork
+:Update the status of the item copy ("on rent" or "available");
+fork again
+|NotificationService|
+:Send the appropriate email to the client (rental confirmation, return, or fine)>
+|Client|
+:Receive email notification<
+end fork
+|WebInterface|
+:Display the final result to the staff>
+|Staff|
+:Receive the result and convey it to the client<
 stop
 @enduml
