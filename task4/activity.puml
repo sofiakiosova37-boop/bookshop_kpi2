@@ -6,17 +6,37 @@ start
 if (Take in rent?) then (Arrange a rental: Branch A)
 :Enter id of customer and number of copy;
 |WebInterface|
-:Submit the request to rental service;
-|RentalService|
+:Submit the request to RentalService;
+|RentalService&Database|
 :Check for fines and client blocks in the database;
 if (Client blocked due to debt?) then (rejection)
 |WebInterface|
 :Display "Rental not possible: outstanding debt";
-|Staff Member|
+|Staff|
 :Inform the client of the rejection;
 stop
 else (no debt)
 endif
+|RentalService&Database|
+repeat
+:Check the status of a copy of an item (book or game);
+|Staff|
+backward: Received "Copy unavailable" please enter the number of another copy;
+repeat while (Status is "on rent"?) is (yes) not (no)
+|Staff|
+if (Customer wants to redeem bonus points?) then (yes)
+:Enter number of bonus points;
+|RentalService and Database|
+:Redeem bonus points and update balance;
+|NotificationService|
+:Send email regarding updated bonus balance>
+|Client|
+:Receive email regarding bonus points<
+else (no)
+endif
+
+
+
 
 stop
 @enduml
