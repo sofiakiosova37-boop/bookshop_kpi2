@@ -1,3 +1,7 @@
+/* < this is an event that comes from the outside, 
+> it is the sending of a signal, 
+and the actions conclude with ; */ 
+
 @startuml
 |Customer|
 start
@@ -45,9 +49,9 @@ else (return an item copy Branch B)
 :Retrieve information regarding the rental of the item copy;
 if (Rental information found?) then (no)
 |WebInterface|
-:Display "No active rental found">
+:Display "No active rental found";
 |Staff|
-:Error received<
+:Error received;
 stop
 else (yes)
 endif
@@ -69,8 +73,8 @@ fork again
 :Receive email notification<
 end fork
 |WebInterface|
-:Display the final result to the staff>
+:Display the final result to the staff;
 |Staff|
-:Receive the result and convey it to the Customer<
+:Receive the result and convey it to the Customer;
 stop
 @enduml
