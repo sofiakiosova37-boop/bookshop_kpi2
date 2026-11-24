@@ -1,0 +1,22 @@
+@startuml
+|Customer|
+start
+:Contact a staff member<
+|Staff|
+if (Take in rent?) then (Arrange a rental: Branch A)
+:Enter id of customer and number of copy;
+|WebInterface|
+:Submit the request to rental service;
+|RentalService|
+:Check for fines and client blocks in the database;
+if (Client blocked due to debt?) then (rejection)
+|WebInterface|
+:Display "Rental not possible: outstanding debt";
+|Staff Member|
+:Inform the client of the rejection;
+stop
+else (no debt)
+endif
+
+stop
+@enduml
