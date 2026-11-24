@@ -18,14 +18,14 @@ service -> DB ++: check status of Book_Copy
 service <-- DB --: return status "доступно"
 
 opt Клієнт бажає використати бонуси
-    staff -> ui ++: enter the number of bonus points to redeem
-    ui -> service ++: applyBonuses
+    staff -> ui: enter the number of bonus points to redeem
+    ui -> service: applyBonuses
     service -> DB ++: update Client amount of bonuses
     service <-- DB --: bonuses deducted
     service -> notify ++: sendBonusNotification()
     notify -> cus: sends an email regarding the deduction of bonus points
     service <-- notify --: notification sent
-    service <-- ui: success
+    ui <-- service: success
     staff <-- ui: displays a message confirming the deduction of bonus points
 end opt
 
