@@ -63,4 +63,9 @@ API --( ICS
 API --( IBS
 API --( IIS
 
+RS --( ICS
+RS --( IBS
+RS --( IIS
+RS --( INS
+
 @enduml
