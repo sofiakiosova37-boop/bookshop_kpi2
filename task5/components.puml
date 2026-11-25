@@ -52,4 +52,15 @@ Customer --> ES : email notifications
 Web --( IAPI
 API -() IAPI
 
+CS -() ICS
+BS -() IBS
+IS -() IIS
+RS -() IRS
+NS -() INS
+
+API --( IRS
+API --( ICS
+API --( IBS
+API --( IIS
+
 @enduml
