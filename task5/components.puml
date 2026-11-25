@@ -7,14 +7,20 @@
 
 
 @startuml
+skinparam componentStyle uml2
+left to right direction
+
 actor "Клієнт" as Customer
 actor "Співробітник" as Staff
+
 package "Book&Game Club" {
     package "UI" {
         component "StaffWeb" as Web
     }
     package "API" {
-        component "BackendAPI" as BEAPI
+        component "BackendAPI" as API {
+            portin "HTTP" as pIn
+        }
         interface "InterfaceAPI" as IAPI
     }
     package "Services" {
@@ -22,7 +28,9 @@ package "Book&Game Club" {
         component "BonusService" as BS
         component "InventoryService" as IS
         component "RentalService" as RS
-        component "NotificationService" as NS
+        component "NotificationService" as NS {
+            portout "SMTP" as pMailOut
+        }
 
         interface "IClientService" as ICS
         interface "IBonusService" as IBS
@@ -51,7 +59,8 @@ interface "IEmail" as IE
 Staff --> Web
 ES --> Customer : email notifications
 Web --( IAPI
-BEAPI -() IAPI
+pIn -() IAPI
+pIn --> API
 
 CS -() ICS
 BS -() IBS
@@ -59,10 +68,7 @@ IS -() IIS
 RS -() IRS
 NS -() INS
 
-BEAPI --( IRS
-BEAPI --( ICS
-BEAPI --( IBS
-BEAPI --( IIS
+API --( IRS
 
 RS --( ICS
 RS --( IBS
@@ -84,5 +90,6 @@ BS --( IClientR
 IS --( ICopyR
 
 ES -() IE
-NS --( IE
+NS --( pMailOut
+pMailOut --( IE
 @endumlm 
