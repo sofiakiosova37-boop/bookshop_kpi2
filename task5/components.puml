@@ -16,9 +16,9 @@ package "Book&Game Club" {
         component "Notification Service" as NS
     }
     package "Data Access" {
-        component "IRentalRepository" as IRentalR
-        component "ICopyRepository" as ICopyR
-        component "IClientRepository" as IClientR
+        component "RentalRepository" as RentalR
+        component "CopyRepository" as CopyR
+        component "ClientRepository" as ClientR
     }
     package "Database" {
         component "PostgreSQL" as PostgreSQL
