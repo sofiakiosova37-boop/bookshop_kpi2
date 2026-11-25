@@ -14,11 +14,21 @@ package "Book&Game Club" {
         component "Inventory Service" as IS
         component "Rental Service" as RS
         component "Notification Service" as NS
+
+        interface "IClient Service" as ICS
+        interface "IBonus Service" as IBS
+        interface"IInventory Service" as IIS
+        interface "IRental Service" as IRS
+        interface "INotification Service" as INS
     }
     package "Data Access" {
         component "RentalRepository" as RentalR
         component "CopyRepository" as CopyR
         component "ClientRepository" as ClientR
+
+        interface "RentalRepository" as IRentalR
+        interface "CopyRepository" as ICopyR
+        interface "ClientRepository" as IClientR
     }
     package "Database" {
         component "PostgreSQL" as PostgreSQL
