@@ -43,14 +43,13 @@ package "Book&Game Club" {
         component "PostgreSQL" as PostgreSQL
         interface "IPostgreSQL" as ISQL
     }
-    package "EmailService" {
-        component "EmailS" as ES
-        interface "IEmail" as IE
-    }
 }
 
+component "EmailService" <<external>> as ES
+interface "IEmail" as IE
+
 Staff --> Web
-Customer --> ES : email notifications
+ES --> Customer : email notifications
 Web --( IAPI
 API -() IAPI
 
