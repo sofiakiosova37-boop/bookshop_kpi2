@@ -45,6 +45,7 @@ package "Book&Game Club" {
     }
     package "EmailService" {
         component "EmailS" as ES
+        interface "IEmail" as IE
     }
 }
 
@@ -74,4 +75,15 @@ RentalR --( ISQL
 CopyR --( ISQL
 ClientR --( ISQL
 
+RentalR -() IRentalR
+CopyR -() ICopyR
+ClientR -() IClientR
+
+RS --( IRentalR
+CS --( IClientR
+BS --( IClientR
+IS --( ICopyR
+
+ES -() IE
+NS --( IE
 @enduml
