@@ -14,34 +14,34 @@ package "Book&Game Club" {
         component "StaffWeb" as Web
     }
     package "API" {
-        component "Backend API" as API
+        component "BackendAPI" as API
         interface "InterfaceAPI" as IAPI
     }
     package "Services" {
-        component "Client Service" as CS
-        component "Bonus Service" as BS
-        component "Inventory Service" as IS
-        component "Rental Service" as RS
-        component "Notification Service" as NS
+        component "ClientService" as CS
+        component "BonusService" as BS
+        component "InventoryService" as IS
+        component "RentalService" as RS
+        component "NotificationService" as NS
 
-        interface "IClient Service" as ICS
-        interface "IBonus Service" as IBS
-        interface"IInventory Service" as IIS
-        interface "IRental Service" as IRS
-        interface "INotification Service" as INS
+        interface "IClientService" as ICS
+        interface "IBonusService" as IBS
+        interface"IInventoryService" as IIS
+        interface "IRentalService" as IRS
+        interface "INotificationService" as INS
     }
     package "Data Access" {
         component "RentalRepository" as RentalR
         component "CopyRepository" as CopyR
         component "ClientRepository" as ClientR
 
-        interface "RentalRepository" as IRentalR
-        interface "CopyRepository" as ICopyR
-        interface "ClientRepository" as IClientR
+        interface "IRentalRepository" as IRentalR
+        interface "ICopyRepository" as ICopyR
+        interface "IClientRepository" as IClientR
     }
     package "Database" {
         component "PostgreSQL" as PostgreSQL
-        interface "PostgreSQL" as ISQL
+        interface "IPostgreSQL" as ISQL
     }
     package "EmailService" {
         component "EmailS" as ES
@@ -86,4 +86,4 @@ IS --( ICopyR
 
 ES -() IE
 NS --( IE
-@enduml
+@endumlm 
