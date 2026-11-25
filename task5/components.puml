@@ -41,6 +41,7 @@ package "Book&Game Club" {
     }
     package "Database" {
         component "PostgreSQL" as PostgreSQL
+        interface "PostgreSQL" as ISQL
     }
     package "EmailService" {
         component "EmailS" as ES
@@ -67,5 +68,10 @@ RS --( ICS
 RS --( IBS
 RS --( IIS
 RS --( INS
+
+PostgreSQL -() ISQL
+RentalR --( ISQL
+CopyR --( ISQL
+ClientR --( ISQL
 
 @enduml
