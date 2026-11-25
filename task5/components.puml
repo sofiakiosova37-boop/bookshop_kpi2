@@ -1,0 +1,27 @@
+@startuml
+actor "Клієнт" as Customer
+actor "Співробітник" as Staff
+package "Book&Game Club" {
+    package "UI" {
+        component "StaffWeb" as Web
+    }
+    package "API" {
+        component "Backend API" as API
+    }
+    package "Services" {
+        component "Client Service" as CS
+        component "Bonus Service" as BS
+        component "Inventory Service" as IS
+        component "Rental Service" as RS
+        component "Notification Service" as NS
+    }
+    package "Data Access" {
+        component "IRentalRepository" as IRentalR
+        component "ICopyRepository" as ICopyR
+        component "IClientRepository" as IClientR
+    }
+    package "Database" {
+        component "PostgreSQL" as PostgreSQL
+    }
+}
+@enduml
