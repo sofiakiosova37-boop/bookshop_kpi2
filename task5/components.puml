@@ -15,6 +15,7 @@ package "Book&Game Club" {
     }
     package "API" {
         component "Backend API" as API
+        interface "InterfaceAPI" as IAPI
     }
     package "Services" {
         component "Client Service" as CS
@@ -48,6 +49,7 @@ package "Book&Game Club" {
 
 Staff --> Web
 Customer --> ES : email notifications
-Web --( API
+Web --( IAPI
+API -() IAPI
 
 @enduml
