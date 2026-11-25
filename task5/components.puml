@@ -14,7 +14,7 @@ package "Book&Game Club" {
         component "StaffWeb" as Web
     }
     package "API" {
-        component "BackendAPI" as API
+        component "BackendAPI" as BEAPI
         interface "InterfaceAPI" as IAPI
     }
     package "Services" {
@@ -26,7 +26,7 @@ package "Book&Game Club" {
 
         interface "IClientService" as ICS
         interface "IBonusService" as IBS
-        interface"IInventoryService" as IIS
+        interface "IInventoryService" as IIS
         interface "IRentalService" as IRS
         interface "INotificationService" as INS
     }
@@ -51,7 +51,7 @@ interface "IEmail" as IE
 Staff --> Web
 ES --> Customer : email notifications
 Web --( IAPI
-API -() IAPI
+BEAPI -() IAPI
 
 CS -() ICS
 BS -() IBS
@@ -59,10 +59,10 @@ IS -() IIS
 RS -() IRS
 NS -() INS
 
-API --( IRS
-API --( ICS
-API --( IBS
-API --( IIS
+BEAPI --( IRS
+BEAPI --( ICS
+BEAPI --( IBS
+BEAPI --( IIS
 
 RS --( ICS
 RS --( IBS
