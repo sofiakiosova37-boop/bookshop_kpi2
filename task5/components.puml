@@ -18,7 +18,7 @@ package "Book&Game Club" {
         component "StaffWeb" as Web
     }
     package "API" {
-        component "BackendAPI" as API {
+        component "BackendAPI" as BEAPI {
             portin "HTTP" as pIn
         }
         interface "InterfaceAPI" as IAPI
@@ -59,8 +59,7 @@ interface "IEmail" as IE
 Staff --> Web
 ES --> Customer : email notifications
 Web --( IAPI
-pIn -() IAPI
-pIn --> API
+pIn --> BEAPI
 
 CS -() ICS
 BS -() IBS
@@ -68,7 +67,7 @@ IS -() IIS
 RS -() IRS
 NS -() INS
 
-API --( IRS
+BEAPI --( IRS
 
 RS --( ICS
 RS --( IBS
@@ -90,6 +89,6 @@ BS --( IClientR
 IS --( ICopyR
 
 ES -() IE
-NS --( pMailOut
 pMailOut --( IE
-@endumlm 
+
+@enduml 
