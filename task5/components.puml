@@ -41,8 +41,13 @@ package "Book&Game Club" {
     package "Database" {
         component "PostgreSQL" as PostgreSQL
     }
+    package "EmailService" {
+        component "EmailS" as ES
+    }
 }
 
-
+Staff --> Web
+Customer --> ES : email notifications
+Web --( API
 
 @enduml
